@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+    dev:
+        ports:
+            - '31337:31337'
+        volumes:
+            - '.:/home/powerdev/project'
+        restart: always
+        logging:
+            options:
+                max-size: 1g
+        build:
+          context: ./
+          dockerfile: Dockerfile
+          target: 'development'
+
