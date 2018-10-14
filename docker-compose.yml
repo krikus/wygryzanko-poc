@@ -1,10 +1,18 @@
-version: '3.4'
+version: '3.6'
 services:
     dev:
+        container_name: wygryzanko_poc
+        stdin_open: true
+        tty: true
         ports:
             - '31337:31337'
         volumes:
-            - '.:/home/powerdev/project'
+            - type: "bind"
+              source: ./
+              target: /home/poc/project
+            - type: "volume"
+              source: ng_modules_poc
+              target: /home/poc/project/frontend/node_modules
         restart: always
         logging:
             options:
@@ -13,4 +21,10 @@ services:
           context: ./
           dockerfile: Dockerfile
           target: 'development'
+        networks:
+          default:
+volumes:
+  ng_modules_poc:
+networks:
+  default:
 
