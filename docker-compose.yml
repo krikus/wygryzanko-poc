@@ -6,6 +6,7 @@ services:
         tty: true
         ports:
             - '31337:31337'
+            - '4200:4200'
         volumes:
             - type: "bind"
               source: ./
