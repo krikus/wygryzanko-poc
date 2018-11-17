@@ -13,7 +13,8 @@ USER root
 RUN apk --no-cache add \
     vim \
     zsh \
-    git
+    git \
+    screen
 
 RUN echo fs.inotify.max_user_watches=524288 | tee /etc/sysctl.d/40-max-user-watches.conf && sysctl -p
 RUN chown -R poc:poc /home/poc
