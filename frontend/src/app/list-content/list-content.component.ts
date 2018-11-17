@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentService, Content } from '../content.service';
+import { Observable, of } from "rxjs";
 
 @Component({
   selector: 'app-list-content',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-content.component.css']
 })
 export class ListContentComponent implements OnInit {
+  contents: Content[];
 
-  constructor() { }
+  constructor(private contentService: ContentService) { }
 
   ngOnInit() {
+    this.getContents();
+  }
+
+  getContents() {
+    console.log('xxxxxxx', this.contentService.getContents())
+    this.contentService.getContents().subscribe(contents => this.contents = contents);
   }
 
 }

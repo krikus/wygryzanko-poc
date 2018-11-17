@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ContentService } from '../content.service';
 
 @Component({
   selector: 'app-add-content',
@@ -8,12 +9,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AddContentComponent implements OnInit {
   newContent: string;
 
-  constructor() { }
+  constructor(private contentService: ContentService) { }
 
   ngOnInit() {
   }
   save() {
-    alert(this.newContent);
+    if (this.newContent && this.newContent.length > 0) {
+      this.contentService.addContent({ body: this.newContent });
+    }
     this.newContent = '';
   }
 
