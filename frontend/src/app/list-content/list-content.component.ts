@@ -17,8 +17,10 @@ export class ListContentComponent implements OnInit {
   }
 
   getContents() {
-    console.log('xxxxxxx', this.contentService.getContents())
-    this.contentService.getContents().subscribe(contents => this.contents = contents);
+    this.contentService.getContents().subscribe(contents => {
+      console.log('subscribe got called!', contents);
+      this.contents = contents;
+    });
   }
 
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { Observable, of } from "rxjs";
+import { Observable, of, pipe, BehaviorSubject} from "rxjs";
 
 function guid() {
   function s4() {
@@ -11,7 +11,6 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-const contents = {};
 
 export interface Content {
   id?: string;
@@ -22,21 +21,29 @@ export interface Content {
   providedIn: 'root'
 })
 export class ContentService {
+  contents: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]);
+  contentsStorage: Content[] = [];
 
   constructor() { }
 
   getContents(): Observable<Content[]> {
-    return of(contents).pipe(contents => _.values(contents));
+    return this.contents;
   }
 
   async addContent(content: Content) {
     content = _.cloneDeep(content)
     content.id = guid();
-    contents[content.id] = content;
+    this.contentsStorage.push(content);
+    this.pushNewContent();
     return content;
   }
 
+  private pushNewContent() {
+    this.contents.next(this.contentsStorage);
+  }
+
   async rmContent(contentId: string) {
-    delete contents[contentId];
+    delete this.contentsStorage[contentId];
+    this.pushNewContent();
   }
 }
