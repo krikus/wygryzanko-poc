@@ -1,3 +1,3 @@
 <ul>
-  <li *ngFor='let content of contents'>{{content.body}}</li>
+  <li *ngFor='let content of contents' [innerHtml]='content.body'></li>
 </ul>
