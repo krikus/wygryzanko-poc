@@ -1,5 +1,25 @@
 <h3>Input new wygryzanko content! </h3>
 <p>
-  <textarea #contentInput [(ngModel)]="newContent" type=text (keydown)="keydown($event)"></textarea>
-  <button (click)="save()">Add</button>
+  <mat-card>
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      placeholder="Title"
+      [(ngModel)]="newTitle"
+    >
+  </mat-form-field>
+  <br>
+  <mat-form-field class="inputArea">
+  <textarea
+    matInput
+    #contentInput
+    placeholder="Insert ad body here!"
+    [(ngModel)]="newContent"
+    type=text
+    (keydown)="keydown($event)"
+  ></textarea>
+  </mat-form-field>
+  <br />
+  <button (click)="save()" mat-raised-button>Add</button>
+  </mat-card>
 </p>

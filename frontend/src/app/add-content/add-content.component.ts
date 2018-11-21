@@ -4,10 +4,11 @@ import { ContentService } from '../content.service';
 @Component({
   selector: 'app-add-content',
   templateUrl: './add-content.component.html',
-  styleUrls: ['./add-content.component.css']
+  styleUrls: ['./add-content.component.css'],
 })
 export class AddContentComponent implements OnInit {
   newContent: string;
+  newTitle: string;
 
   constructor(private contentService: ContentService) { }
 
@@ -22,9 +23,13 @@ export class AddContentComponent implements OnInit {
 
   save() {
     if (this.newContent && this.newContent.length > 0) {
-      this.contentService.addContent({ body: this.newContent });
+      this.contentService.addContent({
+        title: this.newTitle,
+        body: this.newContent,
+      });
     }
     this.newContent = '';
+    this.newTitle = '';
   }
 
 }
