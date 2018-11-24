@@ -6,16 +6,18 @@ WORKDIR /home/poc/project
 FROM base as backend
 USER root
 COPY backend backend
-RUN cd backend && npm i
+RUN cd backend && \
+    npm ci
 
 FROM base as frontend
 USER root
 COPY frontend frontend
-RUN cd frontend && npm i
+RUN cd frontend && \
+    npm ci
 
 FROM base as production
-COPY --from=frontend frontend frontend
-COPY --from=backend backend backend
+COPY --from=backend /home/poc/project/backend backend
+COPY --from=frontend /home/poc/project/frontend frontend
 
 FROM production as development
 USER root
