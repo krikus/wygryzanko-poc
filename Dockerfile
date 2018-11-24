@@ -8,7 +8,7 @@ USER root
 COPY backend backend
 RUN cd backend && npm i
 
-FROM base as fontend
+FROM base as frontend
 USER root
 COPY frontend frontend
 RUN cd frontend && npm i
