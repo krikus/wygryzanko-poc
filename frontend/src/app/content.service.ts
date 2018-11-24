@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { Observable, of, pipe, BehaviorSubject} from "rxjs";
-import { Socket } from 'ng6-socket-io';
+import * as io from 'socket.io-client'
+
+const wsUrl = "http://localhost:4201/"
 
 
 function guid() {
@@ -23,24 +25,29 @@ export interface Content {
 @Injectable({
   providedIn: 'root'
 })
-export class ContentService {
+export class ContentService implements OnInit {
   contents: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]);
   contentsStorage: Content[] = [];
+  socket: SocketIOClient.Socket
 
-
-
-  constructor(private socket: Socket) { }
+  constructor() { }
 
   getContents(): Observable<Content[]> {
     return this.contents;
   }
 
+  ngOnInit() {
+    this.socket = io(wsUrl)
+    this.socket.on('contents', (data) => {
+      console.log("recieved contents: ", data)
+      this.contentsStorage = data
+      this.pushNewContent();
+    })
+  }
+
   async addContent(content: Content) {
     content = _.cloneDeep(content)
-    content.id = guid();
-    this.contentsStorage.push(content);
-    this.pushNewContent();
-    return content;
+    this.socket.emit('add', content)
   }
 
   private pushNewContent() {
