@@ -15,6 +15,9 @@ services:
             - type: "volume"
               source: ng_modules_poc
               target: /home/poc/project/frontend/node_modules
+            - type: "volume"
+              source: ng_modules_poc_back
+              target: /home/poc/project/backend/node_modules
         restart: always
         logging:
             options:
@@ -38,6 +41,7 @@ services:
           target: /data/db
 volumes:
   ng_modules_poc:
+  ng_modules_poc_back:
   mongo_data:
 networks:
   default:

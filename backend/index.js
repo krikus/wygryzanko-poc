@@ -1,12 +1,16 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
+const socket = require('socket.io');
+const server = require('http').Server(app);
+const io = socket(server);
+const socketHandler = require('./src/socket')(io);
 
 
 router.use('/', (req, res, next) => {
-    res.status(200).json({ ok: true });
+  res.status(200).json({ ok: true });
 });
 
 app.use(router);
 
-app.listen(4201, () => 'listening for your commands master!');
+server.listen(80);
