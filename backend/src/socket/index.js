@@ -1,9 +1,16 @@
+const handler = require('./handler');
+const { Content } = require('../models');
+
 module.exports = (io) => {
   io.on('connection', (socket) => {
     socket.emit('hello', { 'fake': 'object' })
-    socket.on('echo', (msg) => {
-      console.log('echo', msg);
-      socket.emit('echo', msg);
+    handler.echo(socket);
+    handler.content(socket);
+  });
+
+  Content.watch()
+    .on('change', (data) => {
+      console.log('change stream!', data);
     })
-  })
+  ;
 };
