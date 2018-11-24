@@ -1,4 +1,4 @@
 split -v
 screen -t frontend zsh -c "cd ./frontend && ng serve --poll=2000"
 focus
-screen -t backend zsh -c "echo 'tu ruszy backend!' && tail -f /dev/null"
+screen -t backend zsh -c "cd ./backend && npm start"

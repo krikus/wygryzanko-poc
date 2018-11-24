@@ -3,10 +3,19 @@ RUN npm install -g @angular/cli
 RUN adduser -D poc
 WORKDIR /home/poc/project
 
-FROM base as production
+FROM base as backend
+USER root
+COPY backend backend
+RUN cd backend && npm i
+
+FROM base as fontend
 USER root
 COPY frontend frontend
 RUN cd frontend && npm i
+
+FROM base as production
+COPY --from=frontend frontend frontend
+COPY --from=backend backend backend
 
 FROM production as development
 USER root

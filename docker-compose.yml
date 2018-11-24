@@ -7,6 +7,7 @@ services:
         ports:
             - '31337:31337'
             - '4200:4200'
+            - '4201:4201'
         volumes:
             - type: "bind"
               source: ./
@@ -22,10 +23,22 @@ services:
           context: ./
           dockerfile: Dockerfile
           target: 'development'
+        depends_on: 
+          - mongo
         networks:
           default:
+    mongo:
+      container_name: mongo_poc
+      ports:
+        - '27017:27017'
+      image: mongo:4.1.5
+      volumes:
+        - type: "volume"
+          source: mongo_data
+          target: /data/db
 volumes:
   ng_modules_poc:
+  mongo_data:
 networks:
   default:
 
