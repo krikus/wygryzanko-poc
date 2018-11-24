@@ -8,7 +8,7 @@ module.exports = {
     })
   },
 
-  content: (socket) => {
+  content: (socket, io, sendList) => {
     socket.on('content', ({ title, body }) => {
       const content = new Content({ title, body });
       content.save()
@@ -17,6 +17,8 @@ module.exports = {
           socket.emit('debug', debug);
           console.log('debug', debug);
         })
+        .then(() => sendList(io))
+      ;
     });
   }
 }
