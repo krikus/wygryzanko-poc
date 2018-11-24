@@ -9,6 +9,10 @@ import { ListContentComponent } from './list-content/list-content.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
 
+import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
+
+const socketIoConfig: SocketIoConfig = { url: 'http://localhost:4201', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +27,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule } fr
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    SocketIoModule.forRoot(socketIoConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]

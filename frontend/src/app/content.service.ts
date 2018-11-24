@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { Observable, of, pipe, BehaviorSubject} from "rxjs";
+import { Socket } from 'ng6-socket-io';
+
 
 function guid() {
   function s4() {
@@ -25,7 +27,9 @@ export class ContentService {
   contents: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]);
   contentsStorage: Content[] = [];
 
-  constructor() { }
+
+
+  constructor(private socket: Socket) { }
 
   getContents(): Observable<Content[]> {
     return this.contents;
