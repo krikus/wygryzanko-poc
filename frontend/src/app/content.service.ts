@@ -25,29 +25,27 @@ export interface Content {
 @Injectable({
   providedIn: 'root'
 })
-export class ContentService implements OnInit {
+export class ContentService {
   contents: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]);
   contentsStorage: Content[] = [];
   socket: SocketIOClient.Socket
 
-  constructor() { }
-
-  getContents(): Observable<Content[]> {
-    return this.contents;
-  }
-
-  ngOnInit() {
+  constructor() {
     this.socket = io(wsUrl)
     this.socket.on('contents', (data) => {
       console.log("recieved contents: ", data)
       this.contentsStorage = data
       this.pushNewContent();
     })
+   }
+
+  getContents(): Observable<Content[]> {
+    return this.contents;
   }
 
   async addContent(content: Content) {
     content = _.cloneDeep(content)
-    this.socket.emit('add', content)
+    this.socket.emit('content', content)
   }
 
   private pushNewContent() {
